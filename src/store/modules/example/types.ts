@@ -1,0 +1,3 @@
+export const BOTAO_CLICADO_SUCCESS = "@example/CLICA_BOTAO_SUCCESS";
+export const BOTAO_CLICADO_REQUEST = "@example/CLICA_BOTAO_REQUEST";
+export const BOTAO_CLICADO_FAILURE = "@example/CLICA_BOTAO_FAILURE";
