@@ -1,25 +1,48 @@
-import { FaHome, FaSignInAlt, FaUserAlt } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import {
+  FaHome,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUserCircle,
+} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Nav } from "./style";
+import { logout } from "../../store/modules/auth/actions";
+import { Nav, UserProfile } from "./style";
 
 export const Header = () => {
-  const selector = useSelector((state: any) => state.example);
+  const dispatch = useDispatch();
+  const selector = useSelector((state: any) => state.auth);
+
+  function handleSignout() {
+    dispatch(logout());
+  }
 
   return (
     <Nav>
+      {selector.isLoggedIn && (
+        <>
+          <UserProfile>
+            <FaUserCircle size={24} />
+            <div>
+              <span>{selector.user.nome}</span>
+              <small>{selector.user.email}</small>
+            </div>
+          </UserProfile>
+        </>
+      )}
       <Link to="/">
-        <FaHome size={24} />
+        {selector.isLoggedIn ? <FaHome size={24} /> : <FaSignInAlt size={24} />}
       </Link>
-      <Link to="/">
-        <FaUserAlt size={24} />
-      </Link>
-      <Link to="/login">
-        <FaSignInAlt size={24} />
-      </Link>
-      <span style={{ color: "#fff" }}>
-        Botão Clicado: {selector.buttonClick ? "SIM" : "NAO"}
-      </span>
+      {!selector.isLoggedIn && (
+        <Link to="/register">
+          <FaUserCircle size={24} />
+        </Link>
+      )}
+      {selector.isLoggedIn && (
+        <button onClick={handleSignout}>
+          <FaSignOutAlt size={24} />
+        </button>
+      )}
     </Nav>
   );
 };

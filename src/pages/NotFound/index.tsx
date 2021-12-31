@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { history } from "../../services/history";
+import { Container } from "../../styles/global";
 
 export const NotFound = () => {
   useEffect(() => {
@@ -9,8 +10,8 @@ export const NotFound = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
       <h1>Página não encontrada</h1>
-    </div>
+    </Container>
   );
 };

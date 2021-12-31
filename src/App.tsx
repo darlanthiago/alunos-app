@@ -10,17 +10,16 @@ import { history } from "./services/history";
 
 import { persistor, store } from "./store";
 
-import GlobalStyle, { Container } from "./styles/global";
+import GlobalStyle from "./styles/global";
+import { Loading } from "./components/Loading";
 
 function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<Loading isLoading={true} />} persistor={persistor}>
         <Router history={history}>
           <Header />
-          <Container>
-            <Routes />
-          </Container>
+          <Routes />
           <ToastContainer autoClose={3000} theme="colored" />
           <GlobalStyle />
         </Router>
