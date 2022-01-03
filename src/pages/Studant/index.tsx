@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { get } from "lodash";
 import { api } from "../../services/api";
 import { Container } from "../../styles/global";
-import { ProfilePicture, StudantContainer } from "./style";
+import { Button, ProfilePicture, StudantContainer } from "./style";
 import { FaEdit, FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Loading } from "../../components/Loading";
@@ -68,6 +68,10 @@ export const Studant = () => {
 
       <Loading isLoading={isLoading} />
 
+      <Button>
+        <Link to="/studant/create">Adicionar aluno</Link>
+      </Button>
+
       <StudantContainer>
         {studants.map((item, index) => (
           <div key={index}>
@@ -81,7 +85,7 @@ export const Studant = () => {
             <span>{item.nome}</span>
             <span>{item.email}</span>
 
-            <Link to={`/studant/${item.id}/edit`}>
+            <Link to={`/studant/update/${item.id}`}>
               <FaEdit size={16} />
             </Link>
             <FaWindowClose size={16} onClick={() => handleDelete(item.id)} />
