@@ -7,6 +7,7 @@ import { Button, ProfilePicture, StudantContainer } from "./style";
 import { FaEdit, FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Loading } from "../../components/Loading";
+import defaultImage from "../../assets/img/image_error.jpg";
 
 type PhotosData = {
   url: string;
@@ -77,7 +78,14 @@ export const Studant = () => {
           <div key={index}>
             <ProfilePicture>
               {get(item, "Fotos[0].url", false) ? (
-                <img src={item.Fotos[0].url} alt={item.Fotos[0].filename} />
+                <img
+                  src={item.Fotos[0].url}
+                  alt={item.Fotos[0].filename}
+                  onError={(e: any) => {
+                    e.target.onerror = null;
+                    e.target.src = defaultImage;
+                  }}
+                />
               ) : (
                 <FaUserCircle size={36} />
               )}
