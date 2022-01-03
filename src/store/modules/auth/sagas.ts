@@ -2,8 +2,13 @@ import { call, put, all, takeLatest } from "redux-saga/effects";
 
 import { toast } from "react-toastify";
 
-import { loginError, loginSuccess } from "./actions";
-import { LOGIN_REQUEST, PERSIST } from "./types";
+import {
+  loginError,
+  loginSuccess,
+  userEditFailure,
+  userEditSuccess,
+} from "./actions";
+import { LOGIN_REQUEST, PERSIST, USER_EDIT_REQUEST } from "./types";
 import { api } from "../../../services/api";
 import { AxiosResponse } from "axios";
 import { get } from "lodash";
@@ -35,6 +40,29 @@ function* handleLogin({ payload }: Data) {
   }
 }
 
+function* userEditRequest({ payload }: { payload: any }) {
+  const { name, email, password } = payload;
+
+  try {
+    const response: AxiosResponse = yield call(api.put, "/users", {
+      nome: name,
+      email: email,
+      password: password || undefined,
+    });
+
+    yield put(userEditSuccess(response.data));
+  } catch (error) {
+    const status = get(error, "response.status", "");
+    if (status === 401) {
+      toast.error("Ops! Faça login novamente!");
+      yield put(loginError());
+      return history.push("/login");
+    }
+
+    yield put(userEditFailure());
+  }
+}
+
 function persistor(data: any) {
   const token = get(data.payload, "auth.token", "");
 
@@ -46,4 +74,5 @@ function persistor(data: any) {
 export default all([
   takeLatest(LOGIN_REQUEST, handleLogin),
   takeLatest(PERSIST, persistor),
+  takeLatest<any>(USER_EDIT_REQUEST, userEditRequest),
 ]);

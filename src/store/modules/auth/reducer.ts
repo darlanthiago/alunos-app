@@ -1,6 +1,14 @@
 import { Reducer } from "redux";
 import { produce } from "immer";
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, LOGIN_REQUEST } from "./types";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGOUT,
+  LOGIN_REQUEST,
+  USER_EDIT_REQUEST,
+  USER_EDIT_FAILURE,
+  USER_EDIT_SUCCESS,
+} from "./types";
 import { api } from "../../../services/api";
 
 type AuthData = {
@@ -36,6 +44,17 @@ export const auth: Reducer = (state = INITIAL_STATE, action) => {
       case LOGOUT:
         delete api.defaults.headers.common.Authorization;
         return INITIAL_STATE;
+      case USER_EDIT_REQUEST:
+        draft.isLoading = true;
+        break;
+      case USER_EDIT_FAILURE:
+        draft.isLoading = false;
+        return draft;
+      case USER_EDIT_SUCCESS:
+        const editData = action.payload;
+        draft.user = editData;
+        draft.isLoading = false;
+        break;
       default:
         return draft;
     }

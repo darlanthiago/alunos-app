@@ -4,12 +4,7 @@ import { get } from "lodash";
 import { api } from "../../services/api";
 import { Container } from "../../styles/global";
 import { ProfilePicture, StudantContainer } from "./style";
-import {
-  FaEdit,
-  FaUserCircle,
-  FaWindowClose,
-  FaExclamation,
-} from "react-icons/fa";
+import { FaEdit, FaUserCircle, FaWindowClose } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Loading } from "../../components/Loading";
 
@@ -47,6 +42,26 @@ export const Studant = () => {
     })();
   }, []);
 
+  async function handleDelete(id: number) {
+    try {
+      setIsLoading(true);
+
+      await api.delete(`/alunos/${id}`);
+
+      const filtered = studants.filter((s) => s.id !== id);
+
+      setStudants(filtered);
+
+      setIsLoading(false);
+
+      toast.success("Aluno removido");
+    } catch (error) {
+      setIsLoading(false);
+
+      toast.error("Não foi possível remover");
+    }
+  }
+
   return (
     <Container>
       <h1>Alunos</h1>
@@ -69,11 +84,7 @@ export const Studant = () => {
             <Link to={`/studant/${item.id}/edit`}>
               <FaEdit size={16} />
             </Link>
-            <Link to={`/studant/${item.id}/delete`}>
-              <FaWindowClose size={16} />
-            </Link>
-
-            <FaExclamation size={16} />
+            <FaWindowClose size={16} onClick={() => handleDelete(item.id)} />
           </div>
         ))}
       </StudantContainer>

@@ -22,11 +22,13 @@ export const Header = () => {
       {selector.isLoggedIn && (
         <>
           <UserProfile>
-            <FaUserCircle size={24} />
-            <div>
-              <span>{selector.user.nome}</span>
-              <small>{selector.user.email}</small>
-            </div>
+            <Link to="/user/edit">
+              <FaUserCircle size={24} />
+              <div>
+                <span>{selector.user.nome}</span>
+                <small>{selector.user.email}</small>
+              </div>
+            </Link>
           </UserProfile>
         </>
       )}

@@ -23,24 +23,25 @@ export const Nav = styled.nav`
 `;
 
 export const UserProfile = styled.div`
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  div {
+  a {
+    color: #fff;
     display: flex;
-    flex-direction: column;
-    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
+    div {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
 
-    span {
-      font-weight: bold;
-      font-size: 16px;
-    }
+      span {
+        font-weight: bold;
+        font-size: 16px;
+      }
 
-    small {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
+      small {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+      }
     }
   }
 `;

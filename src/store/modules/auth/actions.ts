@@ -1,4 +1,11 @@
-import { LOGIN_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGOUT } from "./types";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGOUT,
+  USER_EDIT_REQUEST,
+  USER_EDIT_SUCCESS,
+} from "./types";
 
 export function loginSuccess(payload: object) {
   return {
@@ -23,5 +30,25 @@ export function loginError() {
 export function logout() {
   return {
     type: LOGOUT,
+  };
+}
+
+export function userEditRequest(payload: object) {
+  return {
+    type: USER_EDIT_REQUEST,
+    payload,
+  };
+}
+
+export function userEditSuccess(payload: object) {
+  return {
+    type: USER_EDIT_SUCCESS,
+    payload,
+  };
+}
+
+export function userEditFailure() {
+  return {
+    type: USER_EDIT_SUCCESS,
   };
 }

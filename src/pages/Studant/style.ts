@@ -16,6 +16,10 @@ export const StudantContainer = styled.div`
     span {
       text-align: left;
     }
+
+    svg {
+      cursor: pointer;
+    }
   }
 `;
 
